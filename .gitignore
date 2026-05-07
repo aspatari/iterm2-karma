@@ -18,5 +18,12 @@ node_modules/
 .env
 .env.local
 
-# AI Factory: ephemeral payloads (regenerated on demand)
-.ai-factory/config.update.json
+# AI Factory artifacts (local-only, not tracked in the public repo)
+.ai-factory/
+.ai-factory.json
+.opencode/
+.claude/
+.agents/
+.mcp.json
+opencode.json
+skills-lock.json

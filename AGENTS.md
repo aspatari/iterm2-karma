@@ -1,123 +1,105 @@
 # AGENTS.md
 
-> Карта проекта для AI-агентов и новых разработчиков. Файл описывает только то, что реально существует на момент написания. Обновляйте при значительных изменениях структуры. Подробное содержание тех или иных разделов держится в связанных артефактах — здесь только ссылки и краткие описания.
+> Карта проекта для AI-агентов и новых разработчиков. Файл описывает только то, что реально существует в публичном репозитории. Обновляйте при значительных изменениях структуры.
 
 ## Обзор проекта
 
-Порт VS Code темы [Karma](https://sreetamdas.com/karma) от Шритама Даса для терминала [iTerm2](https://iterm2.com). Build-pipeline на Deno + TypeScript генерирует `.itermcolors` (XML plist) для вариантов Karma Dark и Karma Light — структура повторяет [`catppuccin/iterm`](https://github.com/catppuccin/iterm). См. подробности в [.ai-factory/DESCRIPTION.md](./.ai-factory/DESCRIPTION.md).
+Порт VS Code темы [Karma](https://sreetamdas.com/karma) от Шритама Даса для терминала [iTerm2](https://iterm2.com). Build-pipeline на Deno + TypeScript генерирует `.itermcolors` (XML plist) для двух вариантов — Karma Dark и Karma Light. Структура повторяет [`catppuccin/iterm`](https://github.com/catppuccin/iterm).
 
 ## Стек технологий
 
-- **Язык программирования:** TypeScript
+- **Язык:** TypeScript
 - **Runtime:** Deno (без `node_modules`, нативные импорты, встроенный TypeScript)
 - **Формат вывода:** `.itermcolors` (Apple XML property list / NSColor 0..1)
 - **VCS:** Git (ветка по умолчанию `main`)
-- **Лицензия (планируется):** MIT (совместимо с MIT источника)
+- **Лицензия:** MIT (совместимо с MIT источника `sreetamdas/karma`)
 
 ## Структура проекта
 
 ```
 .
-├── .ai-factory/                  # AI Factory: спецификации, правила, конфиг
-│   ├── DESCRIPTION.md            # детальная спецификация проекта
-│   ├── config.yaml               # настройки AI Factory (язык, git, пути)
-│   └── rules/
-│       └── base.md               # базовые конвенции проекта
-├── .agents/                      # универсальные skills из skills.sh (общие для всех агентов)
-│   └── skills/
-│       └── deno-expert/          # экспертиза по Deno (denoland/skills)
-├── .claude/                      # контекст для Claude Code
-│   ├── agents/                   # агенты AI Factory (sidecar, coordinator, ...)
-│   └── skills/                   # AI Factory skills + симлинки на кастомные
-├── .opencode/                    # контекст для OpenCode
-│   └── skills/                   # AI Factory skills + кастомные (itermcolors-format, karma-palette)
-├── .github/                      # GitHub-specific config
-│   └── workflows/
-│       └── ci.yml                # ✅ CI: fmt/lint/check/test + idempotency + plist validation
-├── .git/                         # репозиторий Git
-├── .ai-factory.json              # метаданные AI Factory (отслеживает установленные skills)
-├── .mcp.json                     # конфиг MCP-серверов для Claude Code
-├── opencode.json                 # конфиг MCP-серверов для OpenCode
-├── skills-lock.json              # lock-файл skills.sh
-└── AGENTS.md                     # этот файл
-```
-
-Структура исходников (текущее состояние, ✅ — реализовано):
-```
-.
 ├── colors/
-│   ├── karma-dark.itermcolors    # ✅ сгенерированный preset для iTerm2 (Dark)
-│   └── karma-light.itermcolors   # ✅ сгенерированный preset для iTerm2 (Light)
+│   ├── karma-dark.itermcolors    # сгенерированный preset для iTerm2 (Dark)
+│   └── karma-light.itermcolors   # сгенерированный preset для iTerm2 (Light)
 ├── assets/
-│   ├── SCREENSHOTS.md            # ✅ recipe для freeze-based previews pipeline
-│   ├── preview.sh                # ✅ true-color ANSI генератор для freeze --execute
-│   ├── karma-dark.webp           # ✅ превью Karma Dark (~48 KB)
-│   └── karma-light.webp          # ✅ превью Karma Light (~47 KB)
+│   ├── SCREENSHOTS.md            # recipe для freeze-based превью
+│   ├── preview.sh                # true-color ANSI генератор для freeze --execute
+│   ├── karma-dark.webp           # превью Karma Dark
+│   └── karma-light.webp          # превью Karma Light
 ├── src/
 │   ├── palette/
-│   │   ├── types.ts              # ✅ Palette, AnsiColors, UiColors, RgbComponents
-│   │   ├── dark.ts               # ✅ darkPalette: Palette (refined ANSI 16 mapping)
-│   │   └── light.ts              # ✅ lightPalette: Palette (refined Light mapping)
+│   │   ├── types.ts              # Palette, AnsiColors, UiColors, RgbComponents
+│   │   ├── dark.ts               # darkPalette: Palette (refined ANSI 16 mapping)
+│   │   └── light.ts              # lightPalette: Palette (refined Light mapping)
 │   └── render/
-│       ├── color.ts              # ✅ parseHex(hex) -> RgbComponents
-│       ├── color.test.ts         # ✅ unit-тесты parseHex (23 кейса)
-│       └── itermcolors.ts        # ✅ renderItermcolors(palette) -> XML plist
-├── build.ts                      # ✅ оркестратор: палитра → render → colors/
-├── deno.json                     # ✅ tasks: build, fmt, fmt:check, lint, test, check
-├── deno.lock                     # ✅ lock-файл для воспроизводимости
-├── README.md                     # ✅ инструкции по импорту, превью, сборка
-├── LICENSE                       # ✅ MIT
-└── .editorconfig                 # ✅ UTF-8/LF/2sp/final-newline
+│       ├── color.ts              # parseHex(hex) -> RgbComponents
+│       ├── color.test.ts         # unit-тесты parseHex (23 кейса)
+│       └── itermcolors.ts        # renderItermcolors(palette) -> XML plist
+├── .github/
+│   └── workflows/
+│       └── ci.yml                # CI: fmt/lint/check/test + idempotency + plist validation
+├── build.ts                      # оркестратор: палитра → render → colors/
+├── deno.json                     # tasks: build, fmt, fmt:check, lint, test, check
+├── deno.lock                     # lock-файл для воспроизводимости
+├── README.md                     # инструкции по импорту, превью, сборка
+├── LICENSE                       # MIT
+└── .editorconfig                 # UTF-8/LF/2sp/final-newline
 ```
 
-## Ключевые точки входа
+## Ключевые команды
 
-| Файл | Назначение |
-|------|------------|
-| `.ai-factory/DESCRIPTION.md` | Полная спецификация проекта (стек, фичи, архитектурные заметки) |
-| `.ai-factory/config.yaml` | Конфигурация AI Factory: язык, git, пути к артефактам |
-| `.ai-factory/rules/base.md` | Базовые конвенции (именование, модули, ошибки, логирование, плейст) |
-| `opencode.json` | MCP-серверы для OpenCode (`filesystem`, `github`) |
-| `.mcp.json` | MCP-серверы для Claude Code (тот же набор в формате Claude) |
-| `build.ts` (планируется) | Deno-скрипт сборки, читает палитру и пишет `colors/*.itermcolors` |
-| `deno.json` (планируется) | Deno tasks: `deno task build`, `deno task fmt`, `deno task lint`, `deno task test` |
+| Команда | Что делает |
+|---------|-----------|
+| `deno task fmt:check` | Проверка форматирования (CI gate) |
+| `deno task lint` | Линтинг |
+| `deno task check` | Type-check (strict mode) |
+| `deno task test` | 23 unit-теста для `parseHex` |
+| `deno task build` | Генерирует `colors/karma-{dark,light}.itermcolors` |
 
-## Документация
+## Конвенции
 
-| Документ | Путь | Описание |
-|----------|------|----------|
-| README | `README.md` | Landing page: инструкции импорта в iTerm2, варианты темы, credits |
-| Спецификация | `.ai-factory/DESCRIPTION.md` | Цели, фичи, стек, архитектурные заметки, нефункциональные требования |
-| Архитектура | `.ai-factory/ARCHITECTURE.md` | Layered + Functional Core / Imperative Shell — слои, зависимости, примеры кода |
-| Roadmap | `.ai-factory/ROADMAP.md` | Стратегические вехи (M1–M7): scaffold → Dark → Light → docs → CI → release → stretch |
-| Базовые правила | `.ai-factory/rules/base.md` | Конвенции именования, структуры модулей, обработки ошибок, plist-формат |
+- **Файлы:** `kebab-case.ts` (например, `palette/dark.ts`)
+- **Переменные/функции:** `camelCase`
+- **Типы/интерфейсы:** `PascalCase` (`Palette`, `AnsiColors`, `UiColors`, `RgbComponents`)
+- **Hex-цвета:** lowercase, формат `#rrggbb` как строки
+- **TypeScript:** strict mode, все поля `readonly`, отсутствие `any`
 
-## AI-контекст: skills и MCP
+## Архитектура
 
-| Файл / каталог | Назначение |
-|----------------|------------|
-| `AGENTS.md` | Этот файл — структурная карта проекта для AI-агентов |
-| `.ai-factory/DESCRIPTION.md` | Спецификация проекта (читайте перед началом работы над фичами) |
-| `.ai-factory/ARCHITECTURE.md` | Архитектурные правила (паттерн, слои, зависимости) |
-| `.ai-factory/rules/base.md` | Конвенции проекта (именование, структура, ошибки) |
-| `.opencode/skills/itermcolors-format/SKILL.md` | Спецификация формата `.itermcolors` (plist 1.0, NSColor, ANSI 0–15) |
-| `.opencode/skills/karma-palette/SKILL.md` | Палитра Karma (dark + light) и маппинг в ANSI 16 + iTerm2 system colors |
-| `.agents/skills/deno-expert/SKILL.md` | Экспертные знания по Deno (jsr:, deno fmt, deno lint, deno test) |
-| `.opencode/skills/aif-*` / `.claude/skills/aif-*` | Метаскиллы AI Factory (plan, implement, review, verify, ...) |
+Layered + Functional Core / Imperative Shell:
 
-## MCP-серверы
+- **`src/palette/`** — чистые данные. Hex-коды Karma, без I/O, без сторонних зависимостей.
+- **`src/render/`** — чистые трансформации (`parseHex`, `renderItermcolors`). Никаких побочных эффектов, throws на невалидном входе.
+- **`build.ts`** — единственный файл с I/O (`Deno.mkdir`, `Deno.writeTextFile`, `console.*`, `Deno.exit`).
 
-| Сервер | Назначение | Требует |
-|--------|------------|---------|
-| `filesystem` | Расширенные файловые операции в каталоге проекта | — |
-| `github` | Работа с issues, PR, репозиторием на GitHub | `GITHUB_TOKEN` в окружении |
+Build детерминирован: повторный запуск `deno task build` даёт пустой `git diff colors/` (проверяется в CI).
+
+## Архитектурные инварианты
+
+- ✅ Hex-литералы есть **только** в `src/palette/{dark,light}.ts`. Test inputs и docstring-примеры разрешены.
+- ✅ `palette/` импортирует только сам себя (`./types.ts`).
+- ✅ `render/` импортирует только `../palette/types.ts` и (для `itermcolors.ts`) `./color.ts`.
+- ✅ `build.ts` — entry point, не импортируется ниоткуда.
+- ✅ `parseHex` — pure function, throws с понятным сообщением на невалидном hex.
+- ✅ Никаких циклических импортов (проверка через `deno info src/render/itermcolors.ts`).
+
+## Формат `.itermcolors`
+
+Сгенерированные файлы — Apple XML property list 1.0 (НЕ binary plist). Ключевые правила:
+
+- 24 обязательных ключа: `Ansi 0 Color` … `Ansi 15 Color` + `Background Color`, `Foreground Color`, `Bold Color`, `Cursor Color`, `Cursor Text Color`, `Selection Color`, `Selected Text Color`, `Link Color`.
+- Top-level ключи отсортированы лексикографически (`Ansi 0`, `Ansi 1`, `Ansi 10`, `Ansi 11`, …, `Ansi 9`, `Background Color`, …) — соответствует выводу `plutil -convert xml1`.
+- Inner dict ключи alphabetical: `Alpha Component`, `Blue Component`, `Color Space`, `Green Component`, `Red Component`.
+- `Color Space` → `<string>sRGB</string>` (НЕ `Color Space Name`).
+- `Alpha Component` всегда `<real>1.0</real>` (даже для opaque).
+- Все RGB-компоненты — `<real>` (не `<integer>` даже для 0/1).
+- DOCTYPE обязателен для портабельности.
+- Валидация: `plutil -lint` (macOS) или `python3 -c "import plistlib; plistlib.load(open('...', 'rb'))"` (cross-platform, используется в CI).
 
 ## Правила для агентов
 
-- **Декомпозиция shell-команд:** не объединяйте команды через `&&`, если требуется отладка. Запускайте по одной и проверяйте результат каждой.
-  - Пример **неправильно**: `git checkout main && git pull`
-  - Пример **правильно**: сначала `git checkout main`, затем `git pull origin main`
-- **Палитра — единственный источник правды:** значения hex-кодов берутся из skill `karma-palette` (или из `src/palette/*.ts` после реализации). Никаких "магических" hex-кодов в `render/` или `build.ts`.
-- **Формат `.itermcolors` — авторитет skill:** при работе с plist-выводом сверяйтесь со skill `itermcolors-format` (правильные ключи, NSColor sRGB, plist 1.0).
-- **Воспроизводимость сборки:** двойной запуск `deno task build` должен давать пустой `git diff` в `colors/`. См. правила в `.ai-factory/rules/base.md`.
-- **Безопасность:** не коммитить `GITHUB_TOKEN` или другие секреты. MCP-серверы читают переменные из окружения.
+- **Палитра — единственный источник правды.** Hex-коды берутся только из `src/palette/{dark,light}.ts`. Никаких "магических" hex-кодов в `render/` или `build.ts`.
+- **Воспроизводимость сборки:** двойной запуск `deno task build` должен давать пустой `git diff colors/`. Если diff есть — найти источник недетерминизма (порядок ключей, форматирование чисел, локаль).
+- **Refined ANSI 16 mapping** (см. `src/palette/dark.ts` и `light.ts`): не использовать verbatim Karma `terminal.ansi*` значения — там есть quirks (`ansiBlue = orange` в Dark, инверсия ANSI 0/7 в Light).
+- **Декомпозиция shell-команд:** не объединять команды через `&&` если требуется отладка. Запускать по одной и проверять результат.
+- **Безопасность:** не коммитить секреты (env vars, tokens). Содержимое `.env` гитнорится.

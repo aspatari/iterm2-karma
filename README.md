@@ -70,7 +70,7 @@ deno task test         # 23 unit tests for the hex parser
 deno task build        # generate both .itermcolors
 ```
 
-See [`.ai-factory/ARCHITECTURE.md`](./.ai-factory/ARCHITECTURE.md) for details on the `palette/` / `render/` / `build.ts` layers (Layered + Functional Core / Imperative Shell).
+The codebase follows a Layered + Functional Core / Imperative Shell pattern: `src/palette/` holds pure data, `src/render/` performs pure transformations, and `build.ts` is the only file that performs I/O. See the source comments and `AGENTS.md` for more.
 
 ## Screenshots
 
