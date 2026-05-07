@@ -45,7 +45,11 @@
 ├── colors/
 │   ├── karma-dark.itermcolors    # ✅ сгенерированный preset для iTerm2 (Dark)
 │   └── karma-light.itermcolors   # ✅ сгенерированный preset для iTerm2 (Light)
-├── assets/                       # ⏳ превью-скриншоты для README
+├── assets/
+│   ├── SCREENSHOTS.md            # ✅ recipe для freeze-based previews pipeline
+│   ├── preview.sh                # ✅ true-color ANSI генератор для freeze --execute
+│   ├── karma-dark.webp           # ✅ превью Karma Dark (~48 KB)
+│   └── karma-light.webp          # ✅ превью Karma Light (~47 KB)
 ├── src/
 │   ├── palette/
 │   │   ├── types.ts              # ✅ Palette, AnsiColors, UiColors, RgbComponents
@@ -58,9 +62,9 @@
 ├── build.ts                      # ✅ оркестратор: палитра → render → colors/
 ├── deno.json                     # ✅ tasks: build, fmt, fmt:check, lint, test, check
 ├── deno.lock                     # ✅ lock-файл для воспроизводимости
-├── README.md                     # ✅ инструкции по импорту, ссылки
-├── LICENSE                       # ⏳ MIT (M4)
-└── .editorconfig                 # ⏳ (M4)
+├── README.md                     # ✅ инструкции по импорту, превью, сборка
+├── LICENSE                       # ✅ MIT
+└── .editorconfig                 # ✅ UTF-8/LF/2sp/final-newline
 ```
 
 ## Ключевые точки входа
