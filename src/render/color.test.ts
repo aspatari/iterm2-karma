@@ -84,6 +84,12 @@ Deno.test("parseHex: throws on empty string", () => {
   assertThrows(() => parseHex(""), Error, 'Invalid hex color: ""');
 });
 
+Deno.test("parseHex: throws on whitespace-only input (preserves original in error)", () => {
+  // Whitespace trims to empty internally, but the error message must still
+  // surface the original whitespace input for downstream diagnostics.
+  assertThrows(() => parseHex("   "), Error, 'Invalid hex color: "   "');
+});
+
 Deno.test("parseHex: throws on '#' alone", () => {
   assertThrows(() => parseHex("#"), Error, 'Invalid hex color: "#"');
 });

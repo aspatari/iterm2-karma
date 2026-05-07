@@ -34,10 +34,10 @@ export const darkPalette: Palette = {
     brightBlack: "#69676c", // tokens.ts: gray.5, terminal.ansiBrightBlack
     brightRed: "#ff7ba0", // refined: brighter pink
     brightGreen: "#9ce3ab", // refined: brighter green
-    brightYellow: "#fce566", // already at peak; reuse
-    brightBlue: "#7fe0ee", // refined: brighter cyan-blue
+    brightYellow: "#fce566", // already at peak; reuse the non-bright value
+    brightBlue: "#7fe0ee", // refined: brighter cyan-blue (Karma не различает blue/cyan)
     brightMagenta: "#c3b0f0", // refined: brighter purple
-    brightCyan: "#7fe0ee", // refined: brighter cyan
+    brightCyan: "#7fe0ee", // refined: same brighter cyan (intentional parity with brightBlue)
     brightWhite: "#f7f1ff", // tokens.ts: primary (foreground)
   },
 
@@ -46,7 +46,12 @@ export const darkPalette: Palette = {
     foreground: "#f7f1ff", // tokens.ts: primary
     cursor: "#fce566", // Karma yellow accent (badge/cursor convention)
     cursorText: "#0a0e14", // background, for legibility on yellow cursor
-    selection: "#3a384a", // pre-blended `#bab6c0 @ 0x26` over `#0a0e14`
+    // Pre-blended approximation of `editor.selectionBackground: #bab6c026` over
+    // background (chose editor over `terminal.selectionBackground: #f7f1ff26`
+    // because editor variant is more recognisable for VS Code Karma users).
+    // Future: when render/ supports NSColor `Alpha Component`, use the 8-digit
+    // hex directly so the selection blends correctly over arbitrary backgrounds.
+    selection: "#3a384a",
     selectedText: "#f7f1ff", // foreground
     bold: "#ffffff", // brighter than fg for emphasis
     link: "#a86efd", // tokens.ts: highlight (links / line numbers)

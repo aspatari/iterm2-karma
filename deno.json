@@ -3,7 +3,10 @@
     "@std/assert": "jsr:@std/assert@^1.0.0"
   },
   "tasks": {
-    "build": "deno run --allow-write build.ts",
+    "build": {
+      "description": "Generate .itermcolors files (requires build.ts — added in next iteration)",
+      "command": "deno run --allow-write build.ts"
+    },
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
     "lint": "deno lint",
