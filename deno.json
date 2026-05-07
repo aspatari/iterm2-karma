@@ -1,4 +1,7 @@
 {
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^1.0.0"
+  },
   "tasks": {
     "build": "deno run --allow-write build.ts",
     "fmt": "deno fmt",
