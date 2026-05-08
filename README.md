@@ -118,6 +118,10 @@ Huge thanks to [Sreetam Das](https://github.com/sreetamdas) for the original Kar
 
 The repository structure and build pipeline are inspired by [catppuccin/iterm](https://github.com/catppuccin/iterm).
 
+## Contributing
+
+PRs welcome — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for development setup, project conventions, and the verification gates the CI enforces. Bug reports and feature requests have [issue templates](./.github/ISSUE_TEMPLATE/) ready to go.
+
 ## License
 
 [MIT](./LICENSE) — compatible with the [original Karma project's license](https://github.com/sreetamdas/karma/blob/main/LICENSE.md).
