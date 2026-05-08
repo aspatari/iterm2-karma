@@ -61,10 +61,14 @@ Deno.test("renderDynamicProfile: emits the required Name and Guid", () => {
   assertEquals(profile.Guid, FIXED_GUID);
 });
 
-Deno.test("renderDynamicProfile: defaults parent to 'Default'", () => {
+Deno.test("renderDynamicProfile: omits 'Dynamic Profile Parent Name' when not specified", () => {
+  // Hardcoding "Default" caused iTerm2 to log "references unknown parent name
+  // Default" because most users do not have a profile literally named
+  // "Default". When the key is absent, iTerm2 inherits silently from the
+  // user's real default profile.
   const out = renderDynamicProfile(SAMPLE, { guid: FIXED_GUID });
   const profile = parse(out).Profiles[0];
-  assertEquals(profile["Dynamic Profile Parent Name"], "Default");
+  assertEquals("Dynamic Profile Parent Name" in profile, false);
 });
 
 Deno.test("renderDynamicProfile: respects custom parent profile name", () => {

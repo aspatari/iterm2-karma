@@ -41,9 +41,16 @@ export interface DynamicProfileOptions {
    */
   readonly guid: string;
   /**
-   * Optional parent profile name. iTerm2 inherits any unspecified attribute
-   * from the parent (or from the user's Default profile if omitted).
-   * The renderer always emits the key so users can change it after install.
+   * Optional parent profile name. When omitted, iTerm2 silently inherits
+   * unspecified attributes from the user's actual default profile.
+   *
+   * IMPORTANT: do not pass `"Default"` — `"Default"` is the conceptual role,
+   * not a profile name. Most users do not have a profile literally named
+   * `"Default"`, so iTerm2 logs a warning ("references unknown parent name
+   * Default") and falls back to the real default profile anyway. The
+   * fallback is correct, but the log spam is noisy. Pass an actual profile
+   * name (like the user's specific profile) only when there is a reason
+   * to override the default-inheritance behaviour.
    */
   readonly parentProfileName?: string;
 }
@@ -112,13 +119,24 @@ export function renderDynamicProfile(
   // Build the profile dict in insertion-order: identity → metadata → colors.
   // JSON.stringify preserves insertion order, so this is the order the user
   // sees in the file.
+  //
+  // `Dynamic Profile Parent Name` is emitted only when the caller explicitly
+  // asks for one. Hardcoding `"Default"` here would make iTerm2 spam a
+  // "references unknown parent name Default" warning for every user who
+  // does not have a profile literally named "Default" (which is most of
+  // them — the default-role profile usually has a different display name).
+  // When the key is absent, iTerm2 inherits from the user's actual default
+  // profile silently, which is the desired behaviour for a colour theme.
   const profile: Record<string, unknown> = {
     Name: palette.name,
     Guid: options.guid,
-    "Dynamic Profile Parent Name": options.parentProfileName ?? "Default",
-    "Custom Command": "No",
-    "Initial Text": "",
   };
+  if (options.parentProfileName !== undefined) {
+    profile["Dynamic Profile Parent Name"] = options.parentProfileName;
+  }
+  profile["Custom Command"] = "No";
+  profile["Initial Text"] = "";
+
   for (const [key, value] of colorEntries) {
     profile[key] = value;
   }

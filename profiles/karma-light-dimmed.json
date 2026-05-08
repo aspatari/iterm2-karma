@@ -3,7 +3,6 @@
     {
       "Name": "Karma Light Dimmed",
       "Guid": "49105A3E-97E2-4A5B-BE8F-5F02138B83D4",
-      "Dynamic Profile Parent Name": "Default",
       "Custom Command": "No",
       "Initial Text": "",
       "Ansi 0 Color": {

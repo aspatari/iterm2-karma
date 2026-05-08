@@ -3,7 +3,6 @@
     {
       "Name": "Karma Light",
       "Guid": "B92F2A7A-CF64-48BA-867C-BD2EDDA70E35",
-      "Dynamic Profile Parent Name": "Default",
       "Custom Command": "No",
       "Initial Text": "",
       "Ansi 0 Color": {
